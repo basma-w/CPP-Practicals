@@ -37,3 +37,4 @@ int main(){
 
    
 }
+//Each time the function is called, one recursive call is made. At each call, the parameter "n" is halved. The number of times "n" can be halved until it reaches the base case n=0, is the ceiling of log2(n). As such, the number of recursive calls is ceiling of log2(n)
