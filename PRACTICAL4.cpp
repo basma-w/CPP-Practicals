@@ -34,7 +34,7 @@ double calcul_poly(double *c, int n, double x){
     sum = sum+(c[i]*pow(x,i)); 
 
   }
-  cout << sum << endl;
+  cout << "the value of the sum at x is: " << sum << endl;
 
 }
 
@@ -71,6 +71,7 @@ double * poli_sum(double *p1, int d1, double *p2, int d2, int &dr){
   }
 
   int g;
+  cout << "the sum of the two polynomials is: ";
   cout << e[0] + f[0];
   if (min>0){
     cout << " + ";
@@ -105,63 +106,67 @@ double * poli_sum(double *p1, int d1, double *p2, int d2, int &dr){
 
     
 }
-//question 3
-double * poli_mult(double *p3, int d3, double *p4, int d4){
-  cout << "the degree of d3 is: "; 
-  cin >> d3; 
-  cout << "the degree of d4 is: "; 
-  cin >> d4; 
-  double * y=new double[d3+1];
-  double * z= new double[d4+1];
-  for(int s=0;s<=d3;s++){
-    cout << "coefficient of degree " << s << ": ";
-    cin >> y[s];}
-  for(int t=0;t<=d4;t++){
-    cout << "coefficient of degree " << t << ": ";
-    cin >> z[t];
-  } 
-  cout << y[0]*z[0];
-  int c;
-  c = d3 + d4;
-  if(c>0){
-    cout <<"+";
-  }
-  for(int s=1;s<=d3;s++){
-    for (int t=1;t<=d4;t++){
-      cout << y[s]*z[t] << "*x^" << s+t << "+";
-    } 
+  
+  //question3
+ double * poly_mult(double *b1, int g1, double *b2, int g2){
+  double * a1 =new double[(g1+1)*(g2+1)];
+  double * a2 = new double[(g1+1)*(g2+1)];
+  int counter = 0;
+  for (int s=0;s<=g1;s++){
+    for (int t=0;t<=g2;t++){
+       a1[counter] = b1[s]*b2[t];
+       a2[counter] = s+t;
+       counter +=1;
+       
     }
-  if(c>0){
-    cout << y[d3]*z[d4] << "*x^"<< d3+d4;}
-
   }
+  double * newarray = new double[g1+g2+1];
+  for (int s=0;s<=g1+g2;s++){
+    newarray[s]=0;
+    for (int t=0;t<=(g1+1)*(g2+1)-1;t++){
+      if(a2[t] == s){
+        newarray[s] += a1[t];
+        
+      }
+    }
+    
+  }
+  cout << newarray[0]<< endl << "the multiplication of the two polynomial is: " << newarray[0];
+  if (g1+g2+1 > 1){
+    cout << " + ";
+    for (int s=1;s<g1+g2;s++){
+      cout << newarray[s] << "*x^"<< s << " + ";
+    }
+    cout << newarray[g1+g2]<< "*x^"<<g1+g2;
+  }
+  
+  
+}
+
   int main(){
     double *p1;
     double *p2;
     double *p3;
     double *p4;
     int g1;
+    int g2;
     double x;
     int d1;
     int d2;
     int dr;
-    int d3;
-    int d4;
+  
 
     p1=read_poly(g1);
     print_poly(p1,g1);
-    p1=read_poly(d1);
-    p2=read_poly(d2);
+    p2=read_poly(g2);
     calcul_poly(p1, g1, x);
-    poli_sum(p1, d1, p2, d2, dr);
-    p3=read_poly(d3);
-    p4=read_poly(d4);
-    poli_mult(p3, d4, p4, d4);
+    p3=read_poly(d1);
+    p4=read_poly(d2);
+    poli_sum(p3, d1, p4, d2, dr);
+    poly_mult(p1, g1, p2, g2);
 
     delete [] p1;
     delete [] p2;
-    delete [] p3;
-    delete [] p4;
     return 0;
 
   }
